@@ -1,0 +1,30 @@
+@model Infrastructure.Services.EmailTemplates.Models.ProfileUpdatedNotificationModel
+@{
+    Layout = "_Layout";
+    ViewBag.Title = Model.UpdatedTitle;
+}
+
+<h2>@Model.ProfileUpdatedText</h2>
+
+<p>@Model.GreetingText <strong>@Model.Username</strong>,</p>
+
+<p>@Model.ConfirmationMessageText</p>
+
+<div class="highlight">
+    <p><strong>@Model.UpdateConfirmedText</strong></p>
+    <p>@Model.ChangesActiveText</p>
+</div>
+
+<div class="warning">
+    <p><strong>@Model.NotYouText</strong></p>
+    <p>@Model.UnauthorizedUpdateText</p>
+    <ul>
+        <li>@Model.ReviewAccountText</li>
+        <li>@Model.ChangePasswordText</li>
+        <li>@Model.ContactSupportText</li>
+    </ul>
+</div>
+
+<p>@Model.RememberUpdateText</p>
+
+<p>@Model.AnyQuestionText</p>

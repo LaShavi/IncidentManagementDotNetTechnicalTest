@@ -1,0 +1,25 @@
+@model Infrastructure.Services.EmailTemplates.Models.WelcomeEmailModel
+@{
+    Layout = "_Layout";
+    ViewBag.Title = Model.WelcomeTitle;
+}
+
+<h2>@string.Format(Model.WelcomeHeading, Model.Username)</h2>
+
+<p>@Model.WelcomeMessage</p>
+
+<div class="highlight">
+    <p><strong>@Model.AccountCreatedTitle</strong></p>
+    <p>@Model.FullServiceAccess</p>
+</div>
+
+<p>@Model.BeginningStepsTitle</p>
+<ul>
+    <li>@Model.CompleteProfileStep</li>
+    <li>@Model.ExploreFeatureStep</li>
+    <li>@Model.ConfigurePreferencesStep</li>
+</ul>
+
+<p>@Model.NeedHelpMessage</p>
+
+<p><strong>@Model.EnjoyExperienceMessage</strong></p>

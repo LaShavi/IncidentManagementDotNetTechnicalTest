@@ -1,0 +1,37 @@
+@model Infrastructure.Services.EmailTemplates.Models.AccountLockedNotificationModel
+@{
+    Layout = "_Layout";
+    ViewBag.Title = Model.LockedTitle;
+}
+
+<h2>@Model.AccountLockedText</h2>
+
+<p>@Model.GreetingText <strong>@Model.Username</strong>,</p>
+
+<p>@Model.BlockedIntroText <strong>@Model.LockedUntilText</strong> @Model.LockReasonText</p>
+
+<div class="warning">
+    <p><strong>@Model.SecurityMeasureText</strong></p>
+    <p>@Model.ProtectionReasonText</p>
+</div>
+
+<div class="highlight">
+    <p><strong>@Model.WhatToDoText</strong></p>
+    <ul>
+        <li>@Model.WaitForUnlockText</li>
+        <li>@Model.ContactSupportForUnlockText</li>
+        <li>@Model.VerifyCredentialsText</li>
+    </ul>
+</div>
+
+<div class="warning">
+    <p><strong>@Model.NotYouText</strong></p>
+    <p>@Model.UnauthorizedAttemptText</p>
+    <ul>
+        <li>@Model.ChangePasswordAfterUnlockText</li>
+        <li>@Model.ReviewActivityText</li>
+        <li>@Model.ContactSecurityTeamText</li>
+    </ul>
+</div>
+
+<p>@Model.ApologyMessageText</p>

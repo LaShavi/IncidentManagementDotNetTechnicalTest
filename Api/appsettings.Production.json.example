@@ -1,0 +1,83 @@
+{
+  "Logging": {
+    "LogLevel": {
+      "Default": "Warning",
+      "Microsoft.AspNetCore": "Warning",
+      "Microsoft.EntityFrameworkCore": "Error"
+    }
+  },
+
+  // Serilog optimizado para producción
+  "Serilog": {
+    "MinimumLevel": {
+      "Default": "Warning",
+      "Override": {
+        "Microsoft": "Warning",
+        "System": "Error"
+      }
+    },
+    "WriteTo": [
+      {
+        "Name": "Console",
+        "Args": {
+          "outputTemplate": "[{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz}] [{Level:u3}] {Message:lj}{NewLine}{Exception}"
+        }
+      },
+      {
+        "Name": "File",
+        "Args": {
+          "path": "logs/prod-log-.txt",
+          "rollingInterval": "Day",
+          "retainedFileCountLimit": 30,
+          "fileSizeLimitBytes": 10485760,
+          "rollOnFileSizeLimit": true
+        }
+      }
+    ]
+  },
+
+  // CORS restrictivo en producción
+  "CorsPolicies": [
+    {
+      "Origin": "https://tusitio.com",
+      "Methods": [ "GET", "POST" ],
+      "Headers": [ "Content-Type", "Authorization" ]
+    },
+    {
+      "Origin": "https://otropermitido.com",
+      "Methods": [ "GET" ],
+      "Headers": [ "Content-Type" ]
+    }
+  ],
+
+  "ConnectionStrings": {
+    "dbContext": "Server=tcp:tu-servidor.database.windows.net,1433;Initial Catalog=TuBaseDatos;Persist Security Info=False;User ID=TuUsuario;Password=TuPassword;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;",
+    "Provider": "SqlServer"
+  },
+
+  "EmailSettings": {
+    "SmtpHost": "smtp.gmail.com",
+    "SmtpPort": "587",
+    "SmtpUsername": "tu-email@gmail.com",
+    "SmtpPassword": "tu-app-password",
+    "FromEmail": "tu-email@gmail.com",
+    "FromName": "Hexagonal Architecture Template",
+    "EnableSsl": "true",
+    "CompanyName": "Company Hexagonal Architecture Template Company",
+    "SupportEmail": "support@company.com",
+
+    // CONFIGURACIÓN: Rutas de plantillas (En producción, solo usa la ruta publicada)
+    "TemplatesPath": "EmailTemplates"
+  },
+
+  "SwaggerDoc": {
+    "Title": "Services Template WEB API",
+    "Version": "v1",
+    "Description": "WEB Service - Template HexagonalArchitecture - Production Environment"
+  },
+
+  "GeneralConfigParams": {
+    "Enable": "1",
+    "RequestLimitPerSecond": "100"
+  }
+}

@@ -1,0 +1,37 @@
+@model Infrastructure.Services.EmailTemplates.Models.AccountDeletedNotificationModel
+@{
+    Layout = "_Layout";
+    ViewBag.Title = Model.DeletedTitle;
+}
+
+<h2>@Model.AccountDeletedText</h2>
+
+<p>@Model.GreetingText <strong>@Model.Username</strong>,</p>
+
+<p>@Model.DeletionConfirmationText</p>
+
+<div class="highlight">
+    <p><strong>@Model.DeletionConfirmedText</strong></p>
+    <p>@Model.DataRemovedText</p>
+</div>
+
+<div class="warning">
+    <p><strong>@Model.NotYouText</strong></p>
+    <p>@Model.UnauthorizedDeletionText</p>
+    <ul>
+        <li>@Model.ContactImmediatelyText</li>
+        <li>@Model.ProvideDetailsText</li>
+        <li>@Model.VerifyOtherServicesText</li>
+    </ul>
+</div>
+
+<p><strong>@Model.WhatMeansDeletionText</strong></p>
+<ul>
+    <li>@Model.NoAccessText</li>
+    <li>@Model.PermanentDeletionText</li>
+    <li>@Model.RecreateAccountText</li>
+</ul>
+
+<p>@Model.FarewellText</p>
+
+<p>@Model.QuestionAboutDeletionText</p>

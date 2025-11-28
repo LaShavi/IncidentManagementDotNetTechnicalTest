@@ -1,0 +1,27 @@
+@model Infrastructure.Services.EmailTemplates.Models.EmailConfirmationModel
+@{
+    Layout = "_Layout";
+    ViewBag.Title = Model.ConfirmationTitle;
+}
+
+<h2>@Model.ConfirmationHeading</h2>
+
+<p>@Model.GreetingText <strong>@Model.Username</strong>,</p>
+
+<p>@Model.ConfirmEmailRequestText</p>
+
+<div class="highlight">
+    <p><strong>@Model.ConfirmationTokenTitle</strong></p>
+    <div class="token">@Model.ConfirmationToken</div>
+</div>
+
+<p>@Model.UseTokenInstructionsText</p>
+
+<div class="warning">
+    <p><strong>@Model.TokenExpirationText</strong></p>
+    <p>@Model.RequestNewTokenText</p>
+</div>
+
+<p>@Model.FullAccessText</p>
+
+<p>@Model.IgnoreIfNotYouText</p>

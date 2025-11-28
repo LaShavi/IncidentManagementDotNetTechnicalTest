@@ -1,0 +1,81 @@
+{
+  "Logging": {
+    "LogLevel": {
+      "Default": "Debug",
+      "Microsoft.AspNetCore": "Information",
+      "Microsoft.EntityFrameworkCore": "Information"
+    }
+  },
+
+  // Serilog más verboso en desarrollo
+  "Serilog": {
+    "MinimumLevel": {
+      "Default": "Debug",
+      "Override": {
+        "Microsoft": "Information",
+        "System": "Information"
+      }
+    },
+    "WriteTo": [
+      {
+        "Name": "Console",
+        "Args": {
+          "outputTemplate": "[{Timestamp:HH:mm:ss} {Level:u3}] {SourceContext}{NewLine}{Message:lj}{NewLine}{Exception}"
+        }
+      },
+      {
+        "Name": "File",
+        "Args": {
+          "path": "logs/dev-log-.txt",
+          "rollingInterval": "Day",
+          "retainedFileCountLimit": 7
+        }
+      }
+    ]
+  },
+
+  // CORS más permisivo en desarrollo
+  "CorsPolicies": [
+    {
+      "Origin": "http://localhost:4200",
+      "Methods": [ "GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS" ],
+      "Headers": [ "*" ]
+    },
+    {
+      "Origin": "http://localhost:3000",
+      "Methods": [ "GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS" ],
+      "Headers": [ "*" ]
+    }
+  ],
+
+  "ConnectionStrings": {
+    "dbContext": "Server=localhost;Database=BdHexagonalArchitectureTemplate;Integrated Security=True;User ID=sa;Password=admin;TrustServerCertificate=True;",
+    "Provider": "SqlServer"
+  },
+
+  "EmailSettings": {
+    "SmtpHost": "smtp.gmail.com",
+    "SmtpPort": "587",
+    "SmtpUsername": "tu-email@gmail.com",
+    "SmtpPassword": "tu-app-password",
+    "FromEmail": "tu-email@gmail.com",
+    "FromName": "Hexagonal Architecture Template [DEV]",
+    "EnableSsl": "true",
+    "CompanyName": "Company Hexagonal Architecture Template Company",
+    "SupportEmail": "support@company.com",
+
+    // CONFIGURACIÓN: Rutas de plantillas (Rutas específicas para desarrollo)
+    "TemplatesPath": "..\\..\\..\\..\\Infrastructure\\Services\\EmailTemplates"
+  },
+
+  "SwaggerDoc": {
+    "Title": "Services Template WEB API [DEVELOPMENT]",
+    "Version": "v1",
+    "Description": "WEB Service - Template HexagonalArchitecture - Development Environment"
+  },
+
+  "GeneralConfigParams": {
+    "Enable": "1",
+    "RequestLimitPerSecond": 1000
+  }
+}

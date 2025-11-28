@@ -1,0 +1,552 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  
+  <!-- Authentication Messages -->
+  <data name="LoginSuccess" xml:space="preserve">
+    <value>Login successful</value>
+  </data>
+  <data name="InvalidCredentials" xml:space="preserve">
+    <value>Invalid credentials</value>
+  </data>
+  <data name="AccountDeactivated" xml:space="preserve">
+    <value>Account is deactivated</value>
+  </data>
+  <data name="AccountLocked" xml:space="preserve">
+    <value>Account is locked until {0}</value>
+  </data>
+  <data name="UserRegisteredSuccess" xml:space="preserve">
+    <value>User registered successfully</value>
+  </data>
+  <data name="UsernameAlreadyExists" xml:space="preserve">
+    <value>Username already exists</value>
+  </data>
+  <data name="EmailAlreadyRegistered" xml:space="preserve">
+    <value>Email is already registered</value>
+  </data>
+  
+  <!-- Token Messages -->
+  <data name="TokenRefreshedSuccess" xml:space="preserve">
+    <value>Token refreshed successfully</value>
+  </data>
+  <data name="TokenRevokedSuccess" xml:space="preserve">
+    <value>Token revoked successfully</value>
+  </data>
+  <data name="InvalidOrExpiredToken" xml:space="preserve">
+    <value>Invalid or expired token</value>
+  </data>
+  
+  <!-- Session Messages -->
+  <data name="LogoutSuccess" xml:space="preserve">
+    <value>Logout successful</value>
+  </data>
+  <data name="UserAuthenticated" xml:space="preserve">
+    <value>User authenticated</value>
+  </data>
+  <data name="InvalidToken" xml:space="preserve">
+    <value>Invalid token</value>
+  </data>
+  <data name="TokenValidation" xml:space="preserve">
+    <value>Token validation</value>
+  </data>
+  <data name="InvalidUser" xml:space="preserve">
+    <value>Invalid user</value>
+  </data>
+  
+  <!-- Profile Messages -->
+  <data name="ProfileUpdatedSuccess" xml:space="preserve">
+    <value>Profile updated successfully</value>
+  </data>
+  
+  <!-- Password Messages -->
+  <data name="PasswordChangedSuccess" xml:space="preserve">
+    <value>Password changed successfully</value>
+  </data>
+  <data name="PasswordsDoNotMatch" xml:space="preserve">
+    <value>Passwords do not match</value>
+  </data>
+  <data name="CurrentPasswordIncorrect" xml:space="preserve">
+    <value>Current password is incorrect</value>
+  </data>
+  <data name="ResetLinkSent" xml:space="preserve">
+    <value>If the email exists, a reset link has been sent.</value>
+  </data>
+  <data name="PasswordResetSuccess" xml:space="preserve">
+    <value>Password reset successfully</value>
+  </data>
+  <data name="InvalidOrExpiredResetToken" xml:space="preserve">
+    <value>Invalid or expired reset token</value>
+  </data>
+  
+  <!-- Validation Messages -->
+  <data name="PasswordValidationCompleted" xml:space="preserve">
+    <value>Password validation completed</value>
+  </data>
+  <data name="EmailRequired" xml:space="preserve">
+    <value>Email is required</value>
+  </data>
+  <data name="PasswordRequired" xml:space="preserve">
+    <value>Password is required</value>
+  </data>
+  <data name="PasswordPolicyViolation" xml:space="preserve">
+    <value>Password does not meet security policies: {0}</value>
+  </data>
+  <data name="UserNotFound" xml:space="preserve">
+    <value>User not found</value>
+  </data>
+  <data name="EmailInvalid" xml:space="preserve">
+    <value>The email is invalid and not secure</value>
+  </data>
+  <data name="UsernameInvalid" xml:space="preserve">
+    <value>Username must be between 3-30 characters and not be a reserved word</value>
+  </data>
+  <data name="NameInvalid" xml:space="preserve">
+    <value>Name must contain only letters, spaces, accents, apostrophes and hyphens</value>
+  </data>
+  <data name="TokenInvalid" xml:space="preserve">
+    <value>Token must be valid in base64 or hexadecimal format</value>
+  </data>
+  
+  <!-- Password Strength Recommendations -->
+  <data name="PasswordRecommendation.VeryWeak.LongerPassword" xml:space="preserve">
+    <value>Consider using a longer password (12+ characters)</value>
+  </data>
+  <data name="PasswordRecommendation.VeryWeak.MixedCharacters" xml:space="preserve">
+    <value>Mix uppercase, lowercase, numbers and symbols</value>
+  </data>
+  <data name="PasswordRecommendation.VeryWeak.AvoidCommon" xml:space="preserve">
+    <value>Avoid common words or personal information</value>
+  </data>
+  <data name="PasswordRecommendation.Weak.Strengthen" xml:space="preserve">
+    <value>Your password is good, but you could make it stronger</value>
+  </data>
+  <data name="PasswordRecommendation.Weak.MoreSpecialChars" xml:space="preserve">
+    <value>Consider adding more special characters</value>
+  </data>
+  <data name="PasswordRecommendation.Strong.Excellent" xml:space="preserve">
+    <value>Excellent! Your password is very secure</value>
+  </data>
+  
+  <!-- DTO Validation Messages -->
+  <data name="UsernameRequired" xml:space="preserve">
+    <value>Username is required</value>
+  </data>
+  <data name="PasswordLengthRequired" xml:space="preserve">
+    <value>Password must be between 8 and 128 characters</value>
+  </data>
+  <data name="PasswordConfirmationRequired" xml:space="preserve">
+    <value>Password confirmation is required</value>
+  </data>
+  <data name="FirstNameRequired" xml:space="preserve">
+    <value>First name is required</value>
+  </data>
+  <data name="LastNameRequired" xml:space="preserve">
+    <value>Last name is required</value>
+  </data>
+  <data name="TokenRequired" xml:space="preserve">
+    <value>Recovery token is required</value>
+  </data>
+  <data name="NewPasswordRequired" xml:space="preserve">
+    <value>New password is required</value>
+  </data>
+  
+  <!-- Exception Messages -->
+  <data name="InvalidRequest" xml:space="preserve">
+    <value>Invalid request: missing required parameters</value>
+  </data>
+  <data name="InvalidRequestParameters" xml:space="preserve">
+    <value>Invalid request parameters</value>
+  </data>
+  <data name="UnauthorizedAccess" xml:space="preserve">
+    <value>Unauthorized access</value>
+  </data>
+  <data name="ResourceNotFound" xml:space="preserve">
+    <value>Resource not found</value>
+  </data>
+  <data name="InvalidOperation" xml:space="preserve">
+    <value>Invalid operation in current state</value>
+  </data>
+  <data name="TimeoutExceeded" xml:space="preserve">
+    <value>Timeout exceeded - Please try again later</value>
+  </data>
+  <data name="OperationCanceled" xml:space="preserve">
+    <value>Operation canceled - Please try again later</value>
+  </data>
+  <data name="OperationNotSupported" xml:space="preserve">
+    <value>Operation not supported</value>
+  </data>
+  <data name="InternalServerError" xml:space="preserve">
+    <value>An internal server error occurred</value>
+  </data>
+  <data name="SupportReference" xml:space="preserve">
+    <value>For support, contact with this reference ID</value>
+  </data>
+  
+  <!-- Client Messages -->
+  <data name="ClienteCreated" xml:space="preserve">
+    <value>Client created successfully</value>
+  </data>
+  <data name="ClienteUpdated" xml:space="preserve">
+    <value>Client updated successfully</value>
+  </data>
+  <data name="ClienteDeleted" xml:space="preserve">
+    <value>Client deleted successfully</value>
+  </data>
+  <data name="ClienteNotFound" xml:space="preserve">
+    <value>Client not found</value>
+  </data>
+  <data name="IdMismatch" xml:space="preserve">
+    <value>URL ID does not match DTO ID</value>
+  </data>
+  
+  <!-- Email Subject Lines -->
+  <data name="WelcomeEmailSubject" xml:space="preserve">
+    <value>Welcome to our platform!</value>
+  </data>
+  <data name="EmailConfirmationSubject" xml:space="preserve">
+    <value>Confirm your email address</value>
+  </data>
+  <data name="PasswordResetSubject" xml:space="preserve">
+    <value>Password Recovery</value>
+  </data>
+  <data name="PasswordChangedSubject" xml:space="preserve">
+    <value>Your password has been changed</value>
+  </data>
+  <data name="ProfileUpdatedSubject" xml:space="preserve">
+    <value>Profile Update</value>
+  </data>
+  <data name="AccountLockedSubject" xml:space="preserve">
+    <value>Account Locked</value>
+  </data>
+  <data name="AccountDeletedSubject" xml:space="preserve">
+    <value>Account Deleted</value>
+  </data>
+
+  <!-- Email Templates - Welcome Email -->
+  <data name="EmailWelcome.AccountCreatedTitle" xml:space="preserve">
+    <value>Your account has been created successfully!</value>
+  </data>
+  <data name="EmailWelcome.FullServiceAccess" xml:space="preserve">
+    <value>You can now start using all our services and features.</value>
+  </data>
+  <data name="EmailWelcome.BeginningStepsTitle" xml:space="preserve">
+    <value>Some steps you can follow to get started:</value>
+  </data>
+  <data name="EmailWelcome.CompleteProfile" xml:space="preserve">
+    <value>Complete your profile with additional information</value>
+  </data>
+  <data name="EmailWelcome.ExploreFeatures" xml:space="preserve">
+    <value>Explore the available features</value>
+  </data>
+  <data name="EmailWelcome.ConfigurePreferences" xml:space="preserve">
+    <value>Configure your personal preferences</value>
+  </data>
+  <data name="EmailWelcome.NeedHelp" xml:space="preserve">
+    <value>If you have any questions or need help, do not hesitate to contact us.</value>
+  </data>
+  <data name="EmailWelcome.EnjoyExperience" xml:space="preserve">
+    <value>Enjoy the experience!</value>
+  </data>
+
+  <!-- Email Templates - Password Reset -->
+  <data name="EmailPasswordReset.RequestReceived" xml:space="preserve">
+    <value>We have received a request to reset the password for your account.</value>
+  </data>
+  <data name="EmailPasswordReset.TokenTitle" xml:space="preserve">
+    <value>Recovery token:</value>
+  </data>
+  <data name="EmailPasswordReset.ImportantInfo" xml:space="preserve">
+    <value>Important information:</value>
+  </data>
+  <data name="EmailPasswordReset.ExpirationWarning" xml:space="preserve">
+    <value>This token will expire in {0} hours for security reasons</value>
+  </data>
+  <data name="EmailPasswordReset.SingleUseOnly" xml:space="preserve">
+    <value>It can only be used once</value>
+  </data>
+  <data name="EmailPasswordReset.IgnoreIfNotRequested" xml:space="preserve">
+    <value>If you did not request this change, you can ignore this email</value>
+  </data>
+  <data name="EmailPasswordReset.HowToReset" xml:space="preserve">
+    <value>To reset your password, use the token shown above in the application.</value>
+  </data>
+  <data name="EmailPasswordReset.SecurityConcern" xml:space="preserve">
+    <value>If you did not request this change or have any questions about the security of your account, please contact our support team immediately.</value>
+  </data>
+
+  <!-- Email Templates - Email Confirmation -->
+  <data name="EmailConfirmation.ConfirmEmailRequest" xml:space="preserve">
+    <value>To complete your registration, we need to confirm your email address.</value>
+  </data>
+  <data name="EmailConfirmation.ConfirmationTokenTitle" xml:space="preserve">
+    <value>Confirmation token:</value>
+  </data>
+  <data name="EmailConfirmation.UseTokenInstructions" xml:space="preserve">
+    <value>Please use this token in the application to verify your account.</value>
+  </data>
+  <data name="EmailConfirmation.TokenExpiration" xml:space="preserve">
+    <value>This token will expire in {0} hours.</value>
+  </data>
+  <data name="EmailConfirmation.RequestNewToken" xml:space="preserve">
+    <value>If the token expires, you will need to request a new one from the application.</value>
+  </data>
+  <data name="EmailConfirmation.FullAccess" xml:space="preserve">
+    <value>Once you confirm your email, you will have full access to all platform features.</value>
+  </data>
+  <data name="EmailConfirmation.IgnoreIfNotYou" xml:space="preserve">
+    <value>If you did not create an account with us, you can ignore this email.</value>
+  </data>
+
+  <!-- Email Templates - Password Changed Notification -->
+  <data name="EmailPasswordChanged.NotificationTitle" xml:space="preserve">
+    <value>Your password has been changed</value>
+  </data>
+  <data name="EmailPasswordChanged.ConfirmationMessage" xml:space="preserve">
+    <value>We inform you that your password has been changed successfully on {0} at {1}.</value>
+  </data>
+  <data name="EmailPasswordChanged.ChangeConfirmed" xml:space="preserve">
+    <value>Change confirmed</value>
+  </data>
+  <data name="EmailPasswordChanged.AccountProtected" xml:space="preserve">
+    <value>Your account is now protected with your new password.</value>
+  </data>
+  <data name="EmailPasswordChanged.NotYou" xml:space="preserve">
+    <value>Wasn't it you?</value>
+  </data>
+  <data name="EmailPasswordChanged.UnauthorizedAccess" xml:space="preserve">
+    <value>If you did not make this change, your account could be compromised. Please:</value>
+  </data>
+  <data name="EmailPasswordChanged.AdditionalSecurityMeasures" xml:space="preserve">
+    <value>As an additional security measure, we recommend:</value>
+  </data>
+  <data name="EmailPasswordChanged.UseStrongPasswords" xml:space="preserve">
+    <value>Use unique and strong passwords</value>
+  </data>
+  <data name="EmailPasswordChanged.Enable2FA" xml:space="preserve">
+    <value>Enable two-factor authentication if available</value>
+  </data>
+  <data name="EmailPasswordChanged.DontShareCredentials" xml:space="preserve">
+    <value>Do not share your credentials with third parties</value>
+  </data>
+
+  <!-- Email Templates - Profile Updated Notification -->
+  <data name="EmailProfileUpdated.ProfileUpdated" xml:space="preserve">
+    <value>Your profile has been updated</value>
+  </data>
+  <data name="EmailProfileUpdated.ConfirmationMessage" xml:space="preserve">
+    <value>We confirm that your profile information has been updated successfully on {0} at {1}.</value>
+  </data>
+  <data name="EmailProfileUpdated.UpdateConfirmed" xml:space="preserve">
+    <value>Update confirmed</value>
+  </data>
+  <data name="EmailProfileUpdated.ChangesActive" xml:space="preserve">
+    <value>The changes to your profile are now active in your account.</value>
+  </data>
+  <data name="EmailProfileUpdated.NotYou" xml:space="preserve">
+    <value>Wasn't it you?</value>
+  </data>
+  <data name="EmailProfileUpdated.UnauthorizedUpdate" xml:space="preserve">
+    <value>If you did not make this update, we recommend:</value>
+  </data>
+  <data name="EmailProfileUpdated.ReviewAccount" xml:space="preserve">
+    <value>Review your account immediately</value>
+  </data>
+  <data name="EmailProfileUpdated.ChangePassword" xml:space="preserve">
+    <value>Change your password for security</value>
+  </data>
+  <data name="EmailProfileUpdated.ContactSupport" xml:space="preserve">
+    <value>Contact our support team</value>
+  </data>
+
+  <!-- Email Templates - Account Locked Notification -->
+  <data name="EmailAccountLocked.AccountLocked" xml:space="preserve">
+    <value>Your account has been temporarily locked</value>
+  </data>
+  <data name="EmailAccountLocked.LockReason" xml:space="preserve">
+    <value>due to multiple failed login attempts.</value>
+  </data>
+  <data name="EmailAccountLocked.SecurityMeasure" xml:space="preserve">
+    <value>Security measure activated</value>
+  </data>
+  <data name="EmailAccountLocked.ProtectionReason" xml:space="preserve">
+    <value>This action was taken to protect your account from unauthorized access.</value>
+  </data>
+  <data name="EmailAccountLocked.UnlockTime" xml:space="preserve">
+    <value>Your account will automatically unlock {0}.</value>
+  </data>
+  <data name="EmailAccountLocked.WhatToDo" xml:space="preserve">
+    <value>What can you do?</value>
+  </data>
+  <data name="EmailAccountLocked.WaitForUnlock" xml:space="preserve">
+    <value>Wait for the automatic unlock</value>
+  </data>
+  <data name="EmailAccountLocked.ContactSupportForUnlock" xml:space="preserve">
+    <value>Contact support if you need immediate unlock</value>
+  </data>
+  <data name="EmailAccountLocked.VerifyCredentials" xml:space="preserve">
+    <value>Verify that you are using the correct credentials</value>
+  </data>
+  <data name="EmailAccountLocked.NotYou" xml:space="preserve">
+    <value>Wasn't it you?</value>
+  </data>
+  <data name="EmailAccountLocked.UnauthorizedAttempt" xml:space="preserve">
+    <value>If you did not try to access your account, this could indicate an unauthorized access attempt. We recommend:</value>
+  </data>
+
+  <!-- Email Templates - Account Deleted Notification -->
+  <data name="EmailAccountDeleted.AccountDeleted" xml:space="preserve">
+    <value>Your account has been deleted</value>
+  </data>
+  <data name="EmailAccountDeleted.DeletionConfirmation" xml:space="preserve">
+    <value>We confirm that your account has been successfully deleted on {0} at {1}.</value>
+  </data>
+  <data name="EmailAccountDeleted.DeletionConfirmed" xml:space="preserve">
+    <value>Deletion confirmed</value>
+  </data>
+  <data name="EmailAccountDeleted.DataRemoved" xml:space="preserve">
+    <value>All your personal information has been removed from our systems in accordance with our privacy policies.</value>
+  </data>
+  <data name="EmailAccountDeleted.NotYou" xml:space="preserve">
+    <value>Wasn't it you?</value>
+  </data>
+  <data name="EmailAccountDeleted.UnauthorizedDeletion" xml:space="preserve">
+    <value>If you did not request the deletion of your account, this is very serious. Please:</value>
+  </data>
+  <data name="EmailAccountDeleted.ContactImmediately" xml:space="preserve">
+    <value>Contact our support team immediately</value>
+  </data>
+  <data name="EmailAccountDeleted.WhatMeansDeletion" xml:space="preserve">
+    <value>What does this mean?</value>
+  </data>
+  <data name="EmailAccountDeleted.NoAccess" xml:space="preserve">
+    <value>You can no longer access your account</value>
+  </data>
+  <data name="EmailAccountDeleted.PermanentDeletion" xml:space="preserve">
+    <value>Your data has been permanently deleted</value>
+  </data>
+  <data name="EmailAccountDeleted.RecreateAccount" xml:space="preserve">
+    <value>If you wish to return, you will need to create a new account</value>
+  </data>
+  <data name="EmailAccountDeleted.Farewell" xml:space="preserve">
+    <value>We are sorry to see you go. If you decide to return in the future, we will be here to welcome you again.</value>
+  </data>
+
+  <!-- Email Templates - Layout Footer -->
+  <data name="EmailLayout.AutomaticMessage" xml:space="preserve">
+    <value>This email was sent automatically, please do not reply to this message.</value>
+  </data>
+  <data name="EmailLayout.SupportContact" xml:space="preserve">
+    <value>If you have any questions, contact our support: {0}</value>
+  </data>
+  <data name="EmailLayout.CopyRights" xml:space="preserve">
+    <value>All rights reserved.</value>
+  </data>
+  
+  <!-- Email Templates - Farewell -->
+  <data name="EmailLayout.Farewell" xml:space="preserve">
+    <value>Best regards,</value>
+  </data>
+  <data name="EmailLayout.TeamPrefix" xml:space="preserve">
+    <value>The team at</value>
+  </data>
+
+  <!-- Email Templates - Welcome Email (Additional) -->
+  <data name="EmailWelcome.WelcomeMessage" xml:space="preserve">
+    <value>We warmly welcome you to our platform.</value>
+  </data>
+  <data name="EmailWelcome.WelcomeTitle" xml:space="preserve">
+    <value>Welcome!</value>
+  </data>
+  <data name="EmailWelcome.WelcomeHeading" xml:space="preserve">
+    <value>Welcome, {0}!</value>
+  </data>
+
+  <!-- Email Templates - Account Deleted Notification (Additional) -->
+  <data name="EmailAccountDeleted.Title" xml:space="preserve">
+    <value>Account Deleted</value>
+  </data>
+  <data name="EmailCommon.Greeting" xml:space="preserve">
+    <value>Hello</value>
+  </data>
+  <data name="EmailAccountDeleted.ProvideDetails" xml:space="preserve">
+    <value>Provide all the details you can remember</value>
+  </data>
+  <data name="EmailAccountDeleted.VerifyOtherServices" xml:space="preserve">
+    <value>Verify the security of your other online services</value>
+  </data>
+  <data name="EmailAccountDeleted.QuestionAboutDeletion" xml:space="preserve">
+    <value>If you have any questions about the deletion process, do not hesitate to contact us.</value>
+  </data>
+
+  <!-- Email Templates - Account Locked Notification (Additional) -->
+  <data name="EmailAccountLocked.Title" xml:space="preserve">
+    <value>Account Locked</value>
+  </data>
+  <data name="EmailAccountLocked.BlockedIntro" xml:space="preserve">
+    <value>Your account has been locked</value>
+  </data>
+  <data name="EmailAccountLocked.ChangePasswordAfterUnlock" xml:space="preserve">
+    <value>Change your password once the account is unlocked</value>
+  </data>
+  <data name="EmailAccountLocked.ReviewActivity" xml:space="preserve">
+    <value>Review recent activity on your account</value>
+  </data>
+  <data name="EmailAccountLocked.ContactSecurityTeam" xml:space="preserve">
+    <value>Contact our security team immediately</value>
+  </data>
+  <data name="EmailAccountLocked.ApologyMessage" xml:space="preserve">
+    <value>We apologize for the inconvenience. This measure is necessary to maintain the security of your account.</value>
+  </data>
+  
+  <!-- Email Templates - Email Confirmation (Additional) -->
+  <data name="EmailConfirmation.Title" xml:space="preserve">
+    <value>Confirm your email address</value>
+  </data>
+  <data name="EmailConfirmation.Heading" xml:space="preserve">
+    <value>Email Confirmation</value>
+  </data>
+
+  <!-- Email Templates - Password Changed Notification (Additional) -->
+  <data name="EmailPasswordChanged.Title" xml:space="preserve">
+    <value>Password Changed</value>
+  </data>
+  <data name="EmailPasswordChanged.ContactSupport" xml:space="preserve">
+    <value>Contact our support immediately</value>
+  </data>
+  <data name="EmailPasswordChanged.ChangePasswordASAP" xml:space="preserve">
+    <value>Change your password as soon as possible</value>
+  </data>
+  <data name="EmailPasswordChanged.ReviewRecentActivity" xml:space="preserve">
+    <value>Review recent activity on your account</value>
+  </data>
+
+  <!-- Email Templates - Password Reset Email (Additional) -->
+  <data name="EmailPasswordReset.Title" xml:space="preserve">
+    <value>Password Recovery</value>
+  </data>
+  <data name="EmailPasswordReset.Heading" xml:space="preserve">
+    <value>Password Recovery</value>
+  </data>
+
+  <!-- Email Templates - Profile Updated Notification (Additional) -->
+  <data name="EmailProfileUpdated.Title" xml:space="preserve">
+    <value>Profile Updated</value>
+  </data>
+  <data name="EmailProfileUpdated.RememberUpdate" xml:space="preserve">
+    <value>Remember that you can update your profile information at any time from your account settings.</value>
+  </data>
+  <data name="EmailProfileUpdated.AnyQuestion" xml:space="preserve">
+    <value>If you have any questions about the changes made, do not hesitate to contact us.</value>
+  </data>
+</root>
