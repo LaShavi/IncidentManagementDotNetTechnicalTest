@@ -42,8 +42,8 @@ public class AuthServiceTests
 
         // Setup configuration defaults
         _mockConfiguration.Setup(x => x["Authentication:SecretKey"]).Returns("LLAVE-DE-SEGURIDAD402814678901278021745jabfheojagrvnbxudmaloskdkf091649451548174528874512361922210425100");
-        _mockConfiguration.Setup(x => x["Authentication:Issuer"]).Returns("HexagonalArchitectureTemplate");
-        _mockConfiguration.Setup(x => x["Authentication:Audience"]).Returns("HexagonalArchitectureTemplate-Users");
+        _mockConfiguration.Setup(x => x["Authentication:Issuer"]).Returns("IncidentManagementDotNetTechnicalTest");
+        _mockConfiguration.Setup(x => x["Authentication:Audience"]).Returns("IncidentManagementDotNetTechnicalTest-Users");
         _mockConfiguration.Setup(x => x["Authentication:AccessTokenExpiration"]).Returns("15");
         _mockConfiguration.Setup(x => x["Authentication:RefreshTokenExpiration"]).Returns("7");
 

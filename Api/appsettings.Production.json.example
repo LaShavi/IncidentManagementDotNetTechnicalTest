@@ -7,7 +7,6 @@
     }
   },
 
-  // Serilog optimizado para producción
   "Serilog": {
     "MinimumLevel": {
       "Default": "Warning",
@@ -36,44 +35,52 @@
     ]
   },
 
-  // CORS restrictivo en producción
   "CorsPolicies": [
     {
-      "Origin": "https://tusitio.com",
+      "Origin": "https://your-production-domain.com",
       "Methods": [ "GET", "POST" ],
       "Headers": [ "Content-Type", "Authorization" ]
     },
     {
-      "Origin": "https://otropermitido.com",
+      "Origin": "https://your-api-domain.com",
       "Methods": [ "GET" ],
       "Headers": [ "Content-Type" ]
     }
   ],
 
   "ConnectionStrings": {
-    "dbContext": "Server=tcp:tu-servidor.database.windows.net,1433;Initial Catalog=TuBaseDatos;Persist Security Info=False;User ID=TuUsuario;Password=TuPassword;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;",
+    "dbContext": "Server=tcp:your-server.database.windows.net,1433;Initial Catalog=your-database-name;Persist Security Info=False;User ID=your-username;Password=YOUR_SECURE_PASSWORD;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;",
     "Provider": "SqlServer"
+  },
+
+  "Authentication": {
+    "SecretKey": "YOUR_PRODUCTION_SECRET_KEY_MINIMUM_64_CHARACTERS_LONG_VERY_SECURE",
+    "Issuer": "IncidentManagementDotNetTechnicalTest",
+    "Audience": "IncidentManagementDotNetTechnicalTest-Users",
+    "AccessTokenExpiration": "15",
+    "RefreshTokenExpiration": "7",
+    "AllowMultipleDevices": true,
+    "MaxFailedAttempts": 5,
+    "LockoutDurationMinutes": 15
   },
 
   "EmailSettings": {
     "SmtpHost": "smtp.gmail.com",
     "SmtpPort": "587",
-    "SmtpUsername": "tu-email@gmail.com",
-    "SmtpPassword": "tu-app-password",
-    "FromEmail": "tu-email@gmail.com",
-    "FromName": "Hexagonal Architecture Template",
+    "SmtpUsername": "your-production-email@gmail.com",
+    "SmtpPassword": "your-production-app-password",
+    "FromEmail": "your-production-email@gmail.com",
+    "FromName": "Incident Management DotNet Technical Test",
     "EnableSsl": "true",
-    "CompanyName": "Company Hexagonal Architecture Template Company",
-    "SupportEmail": "support@company.com",
-
-    // CONFIGURACIÓN: Rutas de plantillas (En producción, solo usa la ruta publicada)
+    "CompanyName": "Incident Management DotNet Technical Test",
+    "SupportEmail": "support@incidentmanagement.com",
     "TemplatesPath": "EmailTemplates"
   },
 
   "SwaggerDoc": {
-    "Title": "Services Template WEB API",
+    "Title": "Incident Management DotNet Technical Test API",
     "Version": "v1",
-    "Description": "WEB Service - Template HexagonalArchitecture - Production Environment"
+    "Description": "WEB Service - Incident Management Technical Test - Production Environment"
   },
 
   "GeneralConfigParams": {

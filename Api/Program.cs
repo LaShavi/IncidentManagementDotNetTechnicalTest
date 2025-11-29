@@ -36,31 +36,9 @@ public class Program
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            if (builder.Environment.IsDevelopment())
-            {
-                // Cargar User-Secrets solo en Development (archivo encriptado local, NO en Git)
-                builder.Configuration.AddUserSecrets<Program>(optional: true);
-                Log.Information("User-Secrets cargados para Development");
-            }
-
             // Cargar Environment Variables (siempre, máxima prioridad en Azure)
             builder.Configuration.AddEnvironmentVariables();
             Log.Information("Environment Variables cargados");
-
-            // Application Insights Configuration
-            var appInsightsConnectionString = builder.Configuration["ApplicationInsights:ConnectionString"];
-            if (!string.IsNullOrEmpty(appInsightsConnectionString))
-            {
-                builder.Services.AddApplicationInsightsTelemetry(options =>
-                {
-                    options.ConnectionString = appInsightsConnectionString;
-                });
-                Log.Information("Application Insights initialized with connection string");
-            }
-            else if (builder.Environment.IsProduction())
-            {
-                Log.Warning("Application Insights ConnectionString is missing in Production environment");
-            }
 
             // Serilog Configuration - Initialize early for startup logging
             Log.Logger = new LoggerConfiguration()
@@ -71,24 +49,7 @@ public class Program
 
             Log.Information("Starting Hexagonal Architecture Template application");
             Log.Information("WebApplication.CreateBuilder completed successfully");
-
-            //// CORS Configuration OLD (Version permisiva)
-            //string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
-            //var corsPolicies = builder.Configuration.GetSection("CorsPolicies").Get<List<CorsPolicyConfig>>() ?? new List<CorsPolicyConfig>();
-            //builder.Services.AddCors(options =>
-            //{
-            //    options.AddPolicy(name: MyAllowSpecificOrigins,
-            //                      builder =>
-            //                      {
-            //                          // Version totalmente permisiva
-            //                          builder.AllowAnyOrigin()
-            //                                 .AllowAnyHeader()
-            //                                 .AllowAnyMethod();
-            //                      });
-            //});
-            //Log.Information("CORS policy configured: {PolicyName}", MyAllowSpecificOrigins);
-
-
+            
             // CORS Configuration
             string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
             var corsPolicies = builder.Configuration.GetSection("CorsPolicies").Get<List<CorsPolicyConfig>>() ?? new List<CorsPolicyConfig>();
@@ -162,7 +123,7 @@ public class Program
             .AddJwtBearer(options =>
             {
                 options.SaveToken = true;
-                options.RequireHttpsMetadata = false; // Only for development
+                options.RequireHttpsMetadata = !isDevelopment; //options.RequireHttpsMetadata = false; // Only for development
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuer = true,
@@ -323,7 +284,7 @@ public class Program
             app.UseSwagger();
             app.UseSwaggerUI(options =>
             {
-                options.SwaggerEndpoint("/swagger/v1/swagger.json", "Hexagonal Architecture Template API v1");
+                options.SwaggerEndpoint("/swagger/v1/swagger.json", "Incident Management DotNet Technical Test API v1");
                 options.RoutePrefix = "swagger";
             });
             Log.Information("Swagger UI configured at /swagger endpoint");

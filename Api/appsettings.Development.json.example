@@ -7,7 +7,6 @@
     }
   },
 
-  // Serilog más verboso en desarrollo
   "Serilog": {
     "MinimumLevel": {
       "Default": "Debug",
@@ -34,7 +33,6 @@
     ]
   },
 
-  // CORS más permisivo en desarrollo
   "CorsPolicies": [
     {
       "Origin": "http://localhost:4200",
@@ -49,29 +47,38 @@
   ],
 
   "ConnectionStrings": {
-    "dbContext": "Server=localhost;Database=BdHexagonalArchitectureTemplate;Integrated Security=True;User ID=sa;Password=admin;TrustServerCertificate=True;",
+    "dbContext": "Server=localhost;Database=BdIncidentManagementDotNetTechnicalTest;Integrated Security=True;User ID=sa;Password=YOUR_LOCAL_SA_PASSWORD;TrustServerCertificate=True;",
     "Provider": "SqlServer"
+  },
+
+  "Authentication": {
+    "SecretKey": "YOUR_DEVELOPMENT_SECRET_KEY_MINIMUM_64_CHARACTERS_LONG",
+    "Issuer": "IncidentManagementDotNetTechnicalTest",
+    "Audience": "IncidentManagementDotNetTechnicalTest-Users",
+    "AccessTokenExpiration": "15",
+    "RefreshTokenExpiration": "7",
+    "AllowMultipleDevices": true,
+    "MaxFailedAttempts": 5,
+    "LockoutDurationMinutes": 15
   },
 
   "EmailSettings": {
     "SmtpHost": "smtp.gmail.com",
     "SmtpPort": "587",
-    "SmtpUsername": "tu-email@gmail.com",
-    "SmtpPassword": "tu-app-password",
-    "FromEmail": "tu-email@gmail.com",
-    "FromName": "Hexagonal Architecture Template [DEV]",
+    "SmtpUsername": "your-email@gmail.com",
+    "SmtpPassword": "your-app-specific-password",
+    "FromEmail": "your-email@gmail.com",
+    "FromName": "Incident Management DotNet Technical Test [DEV]",
     "EnableSsl": "true",
-    "CompanyName": "Company Hexagonal Architecture Template Company",
-    "SupportEmail": "support@company.com",
-
-    // CONFIGURACIÓN: Rutas de plantillas (Rutas específicas para desarrollo)
+    "CompanyName": "Incident Management DotNet Technical Test",
+    "SupportEmail": "support@incidentmanagement.com",
     "TemplatesPath": "..\\..\\..\\..\\Infrastructure\\Services\\EmailTemplates"
   },
 
   "SwaggerDoc": {
-    "Title": "Services Template WEB API [DEVELOPMENT]",
+    "Title": "Incident Management DotNet Technical Test API [DEVELOPMENT]",
     "Version": "v1",
-    "Description": "WEB Service - Template HexagonalArchitecture - Development Environment"
+    "Description": "WEB Service - Incident Management Technical Test - Development Environment"
   },
 
   "GeneralConfigParams": {
