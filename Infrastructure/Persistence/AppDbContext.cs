@@ -27,6 +27,8 @@ namespace Infrastructure.Persistence
         public DbSet<IncidentCategoryEntity> IncidentCategories { get; set; }
         public DbSet<IncidentStatusEntity> IncidentStatuses { get; set; }
         public DbSet<IncidentUpdateEntity> IncidentUpdates { get; set; }
+        public DbSet<IncidentAttachmentEntity> IncidentAttachments { get; set; }
+        public DbSet<IncidentMetricEntity> IncidentMetrics { get; set; }
         #endregion
 
         #region DTOs 
@@ -130,12 +132,14 @@ namespace Infrastructure.Persistence
             {
                 entity.ToTable("Incidents", "dbo");
                 
-                entity.HasIndex(e => new { e.UserId, e.StatusId }).IsClustered();
+                // Indices no clustered
+                entity.HasIndex(e => new { e.UserId, e.StatusId });
                 entity.HasIndex(e => e.CategoryId);
                 entity.HasIndex(e => e.StatusId);
                 entity.HasIndex(e => e.CreatedAt);
                 entity.HasIndex(e => e.Priority);
 
+                // Configuracion explicita de foreign keys
                 entity.HasOne(i => i.User)
                       .WithMany()
                       .HasForeignKey(i => i.UserId)
@@ -146,14 +150,28 @@ namespace Infrastructure.Persistence
                       .HasForeignKey(i => i.CategoryId)
                       .OnDelete(DeleteBehavior.Restrict);
 
+                // Configuracion explicita de StatusId
                 entity.HasOne(i => i.Status)
-                      .WithMany()
+                      .WithMany(s => s.Incidents)
                       .HasForeignKey(i => i.StatusId)
-                      .OnDelete(DeleteBehavior.Restrict);
+                      .OnDelete(DeleteBehavior.Restrict)
+                      .IsRequired(); // Marca como requerido
 
                 entity.HasMany(i => i.Updates)
                       .WithOne(u => u.Incident)
                       .HasForeignKey(u => u.IncidentId)
+                      .OnDelete(DeleteBehavior.Cascade);
+
+                // Relación con Attachments
+                entity.HasMany(i => i.Attachments)
+                      .WithOne(a => a.Incident)
+                      .HasForeignKey(a => a.IncidentId)
+                      .OnDelete(DeleteBehavior.Cascade);
+
+                // Relación con Metrics (1 a 1)
+                entity.HasOne(i => i.Metrics)
+                      .WithOne(m => m.Incident)
+                      .HasForeignKey<IncidentMetricEntity>(m => m.IncidentId)
                       .OnDelete(DeleteBehavior.Cascade);
             });
 
@@ -161,8 +179,9 @@ namespace Infrastructure.Persistence
             modelBuilder.Entity<IncidentUpdateEntity>(entity =>
             {
                 entity.ToTable("IncidentUpdates", "dbo");
-                
-                entity.HasIndex(e => new { e.IncidentId, e.CreatedAt }).IsClustered();
+                                
+                // Indices no clustered
+                entity.HasIndex(e => new { e.IncidentId, e.CreatedAt });
                 entity.HasIndex(e => e.AuthorId);
                 entity.HasIndex(e => e.UpdateType);
 
@@ -175,6 +194,39 @@ namespace Infrastructure.Persistence
                       .WithMany()
                       .HasForeignKey(u => u.AuthorId)
                       .OnDelete(DeleteBehavior.Restrict);
+            });
+
+            // IncidentAttachment
+            modelBuilder.Entity<IncidentAttachmentEntity>(entity =>
+            {
+                entity.ToTable("IncidentAttachments", "dbo");
+                
+                entity.HasIndex(e => e.IncidentId);
+                entity.HasIndex(e => e.CreatedAt);
+
+                entity.HasOne(a => a.Incident)
+                      .WithMany(i => i.Attachments)
+                      .HasForeignKey(a => a.IncidentId)
+                      .OnDelete(DeleteBehavior.Cascade);
+
+                entity.HasOne(a => a.UploadedByUser)
+                      .WithMany()
+                      .HasForeignKey(a => a.UploadedBy)
+                      .OnDelete(DeleteBehavior.Restrict);
+            });
+
+            // IncidentMetric
+            modelBuilder.Entity<IncidentMetricEntity>(entity =>
+            {
+                entity.ToTable("IncidentMetrics", "dbo");
+                
+                entity.HasIndex(e => e.IncidentId).IsUnique();
+                entity.HasIndex(e => e.UpdatedAt);
+
+                entity.HasOne(m => m.Incident)
+                      .WithOne(i => i.Metrics)
+                      .HasForeignKey<IncidentMetricEntity>(m => m.IncidentId)
+                      .OnDelete(DeleteBehavior.Cascade);
             });
 
             #endregion

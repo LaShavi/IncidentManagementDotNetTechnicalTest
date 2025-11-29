@@ -130,4 +130,86 @@ public static class TestDataFixtures
             IsUsed = isUsed
         };
     }
+
+    /// <summary>
+    /// Crea un IncidentAttachment de prueba
+    /// </summary>
+    public static IncidentAttachment CreateTestIncidentAttachment(
+        Guid? id = null,
+        Guid? incidentId = null,
+        string fileName = "test.txt",
+        long fileSize = 1024)
+    {
+        return new IncidentAttachment
+        {
+            Id = id ?? Guid.NewGuid(),
+            IncidentId = incidentId ?? Guid.NewGuid(),
+            FileName = fileName,
+            FilePath = $"/uploads/{fileName}",
+            FileSize = fileSize,
+            FileType = "text/plain",
+            UploadedBy = Guid.NewGuid(),
+            CreatedAt = DateTime.UtcNow
+        };
+    }
+
+    /// <summary>
+    /// Crea un IncidentMetric de prueba
+    /// </summary>
+    public static IncidentMetric CreateTestIncidentMetric(
+        Guid? id = null,
+        Guid? incidentId = null,
+        int commentCount = 0,
+        int attachmentCount = 0)
+    {
+        return new IncidentMetric
+        {
+            Id = id ?? Guid.NewGuid(),
+            IncidentId = incidentId ?? Guid.NewGuid(),
+            CommentCount = commentCount,
+            AttachmentCount = attachmentCount,
+            TimeToClose = null,
+            AverageResolutionTime = null,
+            UpdatedAt = DateTime.UtcNow
+        };
+    }
+
+    /// <summary>
+    /// Crea un IncidentStatus de prueba
+    /// </summary>
+    public static IncidentStatus CreateTestIncidentStatus(
+        int id = 1,
+        string name = "OPEN",
+        string displayName = "Abierto")
+    {
+        return new IncidentStatus
+        {
+            Id = id,
+            Name = name,
+            DisplayName = displayName,
+            Description = $"Estado {displayName}",
+            OrderSequence = id,
+            IsActive = true,
+            CreatedAt = DateTime.UtcNow
+        };
+    }
+
+    /// <summary>
+    /// Crea un IncidentCategory de prueba
+    /// </summary>
+    public static IncidentCategory CreateTestIncidentCategory(
+        Guid? id = null,
+        string name = "Bug",
+        bool isActive = true)
+    {
+        return new IncidentCategory
+        {
+            Id = id ?? Guid.NewGuid(),
+            Name = name,
+            Description = $"Categoria {name}",
+            Color = "#FF0000",
+            IsActive = isActive,
+            CreatedAt = DateTime.UtcNow
+        };
+    }
 }

@@ -5,6 +5,9 @@ using Infrastructure.Services;
 using RazorLight;
 using Infrastructure.Configuration;
 using Infrastructure.Helpers;
+using FluentValidation;
+using Application.DTOs.Incident;
+using Application.Validation;
 
 namespace Api.Middleware
 {
@@ -12,32 +15,66 @@ namespace Api.Middleware
     {
         public static void RegisterDependencies(this IServiceCollection services)
         {
+            // ============================================
             // Obtener configuración
+            // ============================================
             var configuration = services.BuildServiceProvider().GetRequiredService<IConfiguration>();
-            
+
+            // ============================================
             // Configurar LocalizationSettings desde appsettings.json
+            // ============================================
             services.Configure<LocalizationSettings>(configuration.GetSection("Localization"));
 
+            // ============================================
             // Registrar TimeZoneHelper
+            // ============================================
             services.AddScoped<TimeZoneHelper>();
 
-            // Registro de Repositorios
+            // ============================================
+            // REPOSITORIOS - GENERAL
+            // ============================================
             services.AddScoped<IClienteRepository, ClienteRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
             services.AddScoped<IPasswordResetTokenRepository, PasswordResetTokenRepository>();
             services.AddScoped<ITokenBlacklistRepository, TokenBlacklistRepository>();
 
-            // Registro de Servicios de Aplicación
+            // ============================================
+            // REPOSITORIOS - INCIDENT MANAGEMENT
+            // ============================================
+            services.AddScoped<IIncidentRepository, IncidentRepository>();
+            services.AddScoped<IIncidentCategoryRepository, IncidentCategoryRepository>();
+            services.AddScoped<IIncidentStatusRepository, IncidentStatusRepository>();
+
+            // ============================================
+            // SERVICIOS DE APLICACIÓN - GENERAL
+            // ============================================
             services.AddScoped<IClienteService, ClienteService>();
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IPasswordPolicyService, PasswordPolicyService>();
 
-            // Registro de Servicios de Infraestructura
+            // ============================================
+            // SERVICIOS DE APLICACIÓN - INCIDENT MANAGEMENT
+            // ============================================
+            services.AddScoped<IIncidentService, IncidentService>();
+
+            // ============================================
+            // SERVICIOS DE INFRAESTRUCTURA
+            // ============================================
             services.AddScoped<IPasswordHasher, BCryptPasswordHasher>();
             services.AddScoped<IEmailService, EmailService>();
 
-            // Registro de RazorLight para plantillas de email
+            // ============================================
+            // VALIDADORES - FLUENTVALIDATION
+            // ============================================
+            services.AddScoped<IValidator<CreateIncidentRequestDTO>, CreateIncidentValidator>();
+            services.AddScoped<IValidator<UpdateIncidentRequestDTO>, UpdateIncidentValidator>();
+            services.AddScoped<IValidator<AddCommentRequestDTO>, AddCommentValidator>();
+            services.AddScoped<IValidator<AssignUserRequestDTO>, AssignUserValidator>();
+
+            // ============================================
+            // RAZORLIGHT - PLANTILLAS DE EMAIL
+            // ============================================
             services.AddSingleton<IRazorLightEngine>(provider =>
             {
                 var logger = provider.GetRequiredService<ILogger<IRazorLightEngine>>();

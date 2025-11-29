@@ -37,6 +37,8 @@ namespace Domain.Entities
         public IncidentCategory Category { get; set; } = null!;
         public IncidentStatus Status { get; set; } = null!;
         public ICollection<IncidentUpdate> Updates { get; set; } = new List<IncidentUpdate>();
+        public ICollection<IncidentAttachment> Attachments { get; set; } = new List<IncidentAttachment>();
+        public IncidentMetric? Metrics { get; set; }
 
         // Domain Methods
         public bool IsValid()

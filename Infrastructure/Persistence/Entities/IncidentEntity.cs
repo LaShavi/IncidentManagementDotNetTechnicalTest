@@ -35,6 +35,8 @@ namespace Infrastructure.Persistence.Entities
         public UserEntity User { get; set; } = null!;
         public IncidentCategoryEntity Category { get; set; } = null!;
         public IncidentStatusEntity Status { get; set; } = null!;
-        public ICollection<IncidentUpdateEntity> Updates { get; set; } = new List<IncidentUpdateEntity>();
+        public ICollection<IncidentUpdateEntity> Updates { get; set; } = new List<IncidentUpdateEntity>();                
+        public ICollection<IncidentAttachmentEntity> Attachments { get; set; } = new List<IncidentAttachmentEntity>();
+        public IncidentMetricEntity? Metrics { get; set; }
     }
 }
