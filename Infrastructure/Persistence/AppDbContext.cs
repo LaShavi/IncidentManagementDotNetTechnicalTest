@@ -22,6 +22,13 @@ namespace Infrastructure.Persistence
         public DbSet<TokenBlacklistEntity> TokenBlacklist { get; set; }
         #endregion
 
+        #region Incident Management
+        public DbSet<IncidentEntity> Incidents { get; set; }
+        public DbSet<IncidentCategoryEntity> IncidentCategories { get; set; }
+        public DbSet<IncidentStatusEntity> IncidentStatuses { get; set; }
+        public DbSet<IncidentUpdateEntity> IncidentUpdates { get; set; }
+        #endregion
+
         #region DTOs 
         //public DbSet<ResponseAllTableOtherExample> ResponseAllTableOtherExample { get; set; }
         #endregion
@@ -46,8 +53,8 @@ namespace Infrastructure.Persistence
             //modelBuilder.Entity<ResponseAllTableOtherExample>().HasNoKey();
 
             // Definimos info de tablas
-            #region Configuración Entidades
-            
+            #region Configuracion Entidades
+
             // Cliente
             modelBuilder.Entity<ClienteEntity>(entity =>
             {
@@ -71,7 +78,6 @@ namespace Infrastructure.Persistence
                 entity.HasIndex(e => e.Token).IsUnique();
                 entity.HasIndex(e => e.UserId);
                 
-                // Relación con User
                 entity.HasOne(rt => rt.User)
                       .WithMany(u => u.RefreshTokens)
                       .HasForeignKey(rt => rt.UserId)
@@ -95,14 +101,82 @@ namespace Infrastructure.Persistence
                 entity.ToTable("TokenBlacklist", "dbo");
                 entity.HasIndex(e => e.TokenHash).IsUnique();
                 entity.HasIndex(e => e.UserId);
-                entity.HasIndex(e => e.ExpiresAt); // Para limpiar expirados
+                entity.HasIndex(e => e.ExpiresAt);
                 
-                // Relación con User
                 entity.HasOne(tb => tb.User)
                       .WithMany()
                       .HasForeignKey(tb => tb.UserId)
                       .OnDelete(DeleteBehavior.Cascade);
             });
+
+            // IncidentCategory
+            modelBuilder.Entity<IncidentCategoryEntity>(entity =>
+            {
+                entity.ToTable("IncidentCategories", "dbo");
+                entity.HasIndex(e => e.Name).IsUnique();
+                entity.HasIndex(e => e.IsActive);
+            });
+
+            // IncidentStatus
+            modelBuilder.Entity<IncidentStatusEntity>(entity =>
+            {
+                entity.ToTable("IncidentStatuses", "dbo");
+                entity.HasIndex(e => e.Name).IsUnique();
+                entity.HasIndex(e => e.OrderSequence);
+            });
+
+            // Incident
+            modelBuilder.Entity<IncidentEntity>(entity =>
+            {
+                entity.ToTable("Incidents", "dbo");
+                
+                entity.HasIndex(e => new { e.UserId, e.StatusId }).IsClustered();
+                entity.HasIndex(e => e.CategoryId);
+                entity.HasIndex(e => e.StatusId);
+                entity.HasIndex(e => e.CreatedAt);
+                entity.HasIndex(e => e.Priority);
+
+                entity.HasOne(i => i.User)
+                      .WithMany()
+                      .HasForeignKey(i => i.UserId)
+                      .OnDelete(DeleteBehavior.Cascade);
+
+                entity.HasOne(i => i.Category)
+                      .WithMany(c => c.Incidents)
+                      .HasForeignKey(i => i.CategoryId)
+                      .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasOne(i => i.Status)
+                      .WithMany()
+                      .HasForeignKey(i => i.StatusId)
+                      .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasMany(i => i.Updates)
+                      .WithOne(u => u.Incident)
+                      .HasForeignKey(u => u.IncidentId)
+                      .OnDelete(DeleteBehavior.Cascade);
+            });
+
+            // IncidentUpdate
+            modelBuilder.Entity<IncidentUpdateEntity>(entity =>
+            {
+                entity.ToTable("IncidentUpdates", "dbo");
+                
+                entity.HasIndex(e => new { e.IncidentId, e.CreatedAt }).IsClustered();
+                entity.HasIndex(e => e.AuthorId);
+                entity.HasIndex(e => e.UpdateType);
+
+                entity.HasOne(u => u.Incident)
+                      .WithMany(i => i.Updates)
+                      .HasForeignKey(u => u.IncidentId)
+                      .OnDelete(DeleteBehavior.Cascade);
+
+                entity.HasOne(u => u.Author)
+                      .WithMany()
+                      .HasForeignKey(u => u.AuthorId)
+                      .OnDelete(DeleteBehavior.Restrict);
+            });
+
             #endregion
 
             //OnModelCreatingPartial(modelBuilder);

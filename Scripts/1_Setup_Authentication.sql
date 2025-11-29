@@ -1,14 +1,33 @@
--- COMPLETE SCRIPT FOR INITIAL AUTHENTICATION SETUP WITH TOKEN BLACKLIST
--- Execute in SQL Server Management Studio
+-- ============================================================================
+-- SCRIPT: 1_Setup_Authentication.sql
+-- PROPÓSITO: Configurar tablas de autenticación y autorización
+-- DESCRIPCIÓN: Crea tablas Users, RefreshTokens y TokenBlacklist
+-- BASE DE DATOS: BdIncidentManagementDotNetTechnicalTest
+-- VERSIÓN: 1.0
+-- ============================================================================
 
--- BD En Local.
---USE [BdHexagonalArchitectureTemplate]
+USE [master];
+GO
 
--- BD En Azure.
-USE [HexagonalArchitectureDB]
+IF NOT EXISTS (SELECT name FROM sys. databases WHERE name = 'BdIncidentManagementDotNetTechnicalTest')
+BEGIN
+    PRINT 'ERROR: Base de datos [BdIncidentManagementDotNetTechnicalTest] no existe';
+    PRINT 'Ejecuta primero el script 0_Create_Database. sql';
+    RAISERROR('Base de datos no encontrada', 16, 1);
+END
 
--- 1. CREATE TABLES IF NOT EXIST
-IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='Users' AND xtype='U')
+USE [BdIncidentManagementDotNetTechnicalTest];
+GO
+
+PRINT '========== INICIANDO SETUP DE AUTENTICACIÓN ==========';
+PRINT '';
+
+-- ============================================================================
+-- 1. CREAR TABLAS (IDEMPOTENTE)
+-- ============================================================================
+
+-- TABLA: Users
+IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'Users')
 BEGIN
     CREATE TABLE [dbo].[Users] (
         [Id] UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWID(),
@@ -24,14 +43,17 @@ BEGIN
         [FailedAttempts] INT NOT NULL DEFAULT 0,
         [LockedUntil] DATETIME2 NULL
     );
-    PRINT 'Table Users created successfully';
+    PRINT 'Tabla [Users] creada exitosamente';
 END
 ELSE
 BEGIN
-    PRINT 'Table Users already exists';
+    PRINT 'Tabla [Users] ya existe';
 END
 
-IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='RefreshTokens' AND xtype='U')
+GO
+
+-- TABLA: RefreshTokens
+IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'RefreshTokens')
 BEGIN
     CREATE TABLE [dbo].[RefreshTokens] (
         [Id] UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWID(),
@@ -42,17 +64,19 @@ BEGIN
         [IsRevoked] BIT NOT NULL DEFAULT 0,
         [RevokedAt] DATETIME2 NULL,
         [ReplacedBy] NVARCHAR(500) NULL,
-        FOREIGN KEY ([UserId]) REFERENCES [dbo].[Users]([Id]) ON DELETE CASCADE
+        CONSTRAINT FK_RefreshTokens_Users FOREIGN KEY ([UserId]) REFERENCES [dbo].[Users]([Id]) ON DELETE CASCADE
     );
-    PRINT 'Table RefreshTokens created successfully';
+    PRINT 'Tabla [RefreshTokens] creada exitosamente';
 END
 ELSE
 BEGIN
-    PRINT 'Table RefreshTokens already exists';
+    PRINT 'Tabla [RefreshTokens] ya existe';
 END
 
--- NEW: TokenBlacklist Table
-IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='TokenBlacklist' AND xtype='U')
+GO
+
+-- TABLA: TokenBlacklist
+IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'TokenBlacklist')
 BEGIN
     CREATE TABLE [dbo].[TokenBlacklist] (
         [Id] UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWID(),
@@ -61,92 +85,90 @@ BEGIN
         [RevokedAt] DATETIME2 NOT NULL DEFAULT GETUTCDATE(),
         [ExpiresAt] DATETIME2 NOT NULL,
         [Reason] NVARCHAR(50) NOT NULL DEFAULT 'Manual revocation',
-        FOREIGN KEY ([UserId]) REFERENCES [dbo].[Users]([Id]) ON DELETE CASCADE
+        CONSTRAINT FK_TokenBlacklist_Users FOREIGN KEY ([UserId]) REFERENCES [dbo].[Users]([Id]) ON DELETE CASCADE
     );
-    PRINT 'Table TokenBlacklist created successfully';
+    PRINT 'Tabla [TokenBlacklist] creada exitosamente';
 END
 ELSE
 BEGIN
-    PRINT 'Table TokenBlacklist already exists';
+    PRINT 'Tabla [TokenBlacklist] ya existe';
 END
 
--- 2. CREATE INDEXES FOR PERFORMANCE
-IF NOT EXISTS (SELECT * FROM sys.indexes WHERE name = 'IX_Users_Username')
+GO
+
+-- ============================================================================
+-- 2. CREAR ÍNDICES (IDEMPOTENTE)
+-- ============================================================================
+
+PRINT '';
+PRINT 'Creando índices... ';
+
+-- Índices: Users
+IF NOT EXISTS (SELECT * FROM sys.indexes WHERE name = 'IX_Users_Username' AND object_id = OBJECT_ID('dbo.Users'))
 BEGIN
     CREATE INDEX IX_Users_Username ON [dbo].[Users] ([Username]);
-    PRINT 'Index IX_Users_Username created successfully';
+    PRINT 'Índice IX_Users_Username creado';
 END
 
-IF NOT EXISTS (SELECT * FROM sys.indexes WHERE name = 'IX_Users_Email')
+IF NOT EXISTS (SELECT * FROM sys. indexes WHERE name = 'IX_Users_Email' AND object_id = OBJECT_ID('dbo.Users'))
 BEGIN
     CREATE INDEX IX_Users_Email ON [dbo].[Users] ([Email]);
-    PRINT 'Index IX_Users_Email created successfully';
+    PRINT 'Índice IX_Users_Email creado';
 END
 
-IF NOT EXISTS (SELECT * FROM sys.indexes WHERE name = 'IX_RefreshTokens_Token')
+-- Índices: RefreshTokens
+IF NOT EXISTS (SELECT * FROM sys.indexes WHERE name = 'IX_RefreshTokens_Token' AND object_id = OBJECT_ID('dbo.RefreshTokens'))
 BEGIN
     CREATE INDEX IX_RefreshTokens_Token ON [dbo].[RefreshTokens] ([Token]);
-    PRINT 'Index IX_RefreshTokens_Token created successfully';
+    PRINT 'Índice IX_RefreshTokens_Token creado';
 END
 
-IF NOT EXISTS (SELECT * FROM sys.indexes WHERE name = 'IX_RefreshTokens_UserId')
+IF NOT EXISTS (SELECT * FROM sys.indexes WHERE name = 'IX_RefreshTokens_UserId' AND object_id = OBJECT_ID('dbo.RefreshTokens'))
 BEGIN
     CREATE INDEX IX_RefreshTokens_UserId ON [dbo].[RefreshTokens] ([UserId]);
-    PRINT 'Index IX_RefreshTokens_UserId created successfully';
+    PRINT 'Índice IX_RefreshTokens_UserId creado';
 END
 
--- NEW: TokenBlacklist Indexes
-IF NOT EXISTS (SELECT * FROM sys.indexes WHERE name = 'IX_TokenBlacklist_TokenHash')
+-- Índices: TokenBlacklist
+IF NOT EXISTS (SELECT * FROM sys.indexes WHERE name = 'IX_TokenBlacklist_TokenHash' AND object_id = OBJECT_ID('dbo.TokenBlacklist'))
 BEGIN
     CREATE INDEX IX_TokenBlacklist_TokenHash ON [dbo].[TokenBlacklist] ([TokenHash]);
-    PRINT 'Index IX_TokenBlacklist_TokenHash created successfully';
+    PRINT 'Índice IX_TokenBlacklist_TokenHash creado';
 END
 
-IF NOT EXISTS (SELECT * FROM sys.indexes WHERE name = 'IX_TokenBlacklist_UserId')
+IF NOT EXISTS (SELECT * FROM sys.indexes WHERE name = 'IX_TokenBlacklist_UserId' AND object_id = OBJECT_ID('dbo.TokenBlacklist'))
 BEGIN
     CREATE INDEX IX_TokenBlacklist_UserId ON [dbo].[TokenBlacklist] ([UserId]);
-    PRINT 'Index IX_TokenBlacklist_UserId created successfully';
+    PRINT 'Índice IX_TokenBlacklist_UserId creado';
 END
 
-IF NOT EXISTS (SELECT * FROM sys.indexes WHERE name = 'IX_TokenBlacklist_ExpiresAt')
+IF NOT EXISTS (SELECT * FROM sys. indexes WHERE name = 'IX_TokenBlacklist_ExpiresAt' AND object_id = OBJECT_ID('dbo.TokenBlacklist'))
 BEGIN
     CREATE INDEX IX_TokenBlacklist_ExpiresAt ON [dbo].[TokenBlacklist] ([ExpiresAt]);
-    PRINT 'Index IX_TokenBlacklist_ExpiresAt created successfully (for cleanup of expired tokens)';
+    PRINT 'Índice IX_TokenBlacklist_ExpiresAt creado';
 END
 
--- 3. INSERT DEFAULT ADMIN USER
--- NOTE: The password will be "Admin123!" hashed with BCrypt
-IF NOT EXISTS (SELECT * FROM [dbo].[Users] WHERE [Username] = 'admin')
-BEGIN
-    INSERT INTO [dbo].[Users] 
-    ([Id], [Username], [Email], [PasswordHash], [FirstName], [LastName], [Role], [IsActive])
-    VALUES 
-    (NEWID(), 'admin', 'admin@hexagonal-template.com', 
-    '$2a$12$LQv3c1yqBWVHxkd0LHAkCOYz6TtxMQJqhN8/LewKyNvreop4XUPR2', -- Password: Admin123! (BCrypt)
-    'Administrator', 'System', 'Admin', 1);
-    
-    PRINT 'Admin user created successfully';
-    PRINT 'Username: admin';
-    PRINT 'Password: Admin123!';
-    PRINT 'Email: admin@hexagonal-template.com';
-END
-ELSE
-BEGIN
-    PRINT 'The admin user already exists';
-END
+GO
 
--- 4. VERIFY INSTALLATION
-PRINT '';
-PRINT '========== VERIFICATION RESULTS ==========';
-SELECT 'Users' AS TableName, COUNT(*) AS RecordCount FROM [dbo].[Users];
-SELECT 'RefreshTokens' AS TableName, COUNT(*) AS RecordCount FROM [dbo].[RefreshTokens];
-SELECT 'TokenBlacklist' AS TableName, COUNT(*) AS RecordCount FROM [dbo].[TokenBlacklist];
+-- ============================================================================
+-- 3.  VERIFICACIÓN FINAL
+-- ============================================================================
 
 PRINT '';
-PRINT 'Admin user details:';
-SELECT [Id], [Username], [Email], [FirstName], [LastName], [Role], [IsActive], [CreatedAt] 
-FROM [dbo].[Users] 
-WHERE [Username] = 'admin';
+PRINT '========== VERIFICACIÓN FINAL ==========';
+
+DECLARE @UsersCount INT;
+DECLARE @RefreshTokensCount INT;
+DECLARE @TokenBlacklistCount INT;
+
+SELECT @UsersCount = COUNT(*) FROM [dbo].[Users];
+SELECT @RefreshTokensCount = COUNT(*) FROM [dbo].[RefreshTokens];
+SELECT @TokenBlacklistCount = COUNT(*) FROM [dbo].[TokenBlacklist];
+
+PRINT 'Registros por tabla:';
+PRINT '  - Users: ' + CAST(@UsersCount AS NVARCHAR(10));
+PRINT '  - RefreshTokens: ' + CAST(@RefreshTokensCount AS NVARCHAR(10));
+PRINT '  - TokenBlacklist: ' + CAST(@TokenBlacklistCount AS NVARCHAR(10));
 
 PRINT '';
-PRINT '========== AUTHENTICATION SETUP COMPLETED SUCCESSFULLY ==========';
+PRINT '========== SETUP DE AUTENTICACIÓN COMPLETADO  ==========';
