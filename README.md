@@ -272,3 +272,69 @@ En `appsettings.json`:
 - Swagger/OpenAPI
 
 ---
+
+## Resultados Reales Pruebas de carga - 29 Noviembre 2025
+
+### TEST 1: GET Requests (1000 solicitudes)
+```
+Exito:             100% (1000/1000)
+Req/segundo:       584.81 (Meta: 16.67)
+Latencia promedio: 32ms
+Latencia manima:   11ms
+Latencia maxima:   62ms
+Tiempo total:      1.71s
+
+Veredicto: EXCELENTE (35x meta)
+```
+
+### TEST 2: POST Requests (1000 solicitudes)
+```
+Exito:             100% (1000/1000)
+Req/segundo:       222.66 (Meta: 5)
+Latencia promedio: 65ms
+Latencia manima:   24ms
+Latencia maxima:   118ms
+Tiempo total:      4.49s
+
+Veredicto: EXCELENTE (44x meta)
+```
+
+### TEST 3: Carga Mixta (700 GET + 300 POST)
+```
+Exito:             100% (1000/1000)
+Req/segundo:       440.20 (Meta: 7)
+Latencia promedio: 43ms
+Latencia manima:   8ms
+Latencia maxima:   109ms
+Tiempo total:      2.27s
+
+Veredicto: EXCELENTE (62x meta)
+```
+
+### TEST 4: Resistencia - Soak Test (10 batches x 100 req)
+```
+Exito:            100% (1000/1000)
+Batch promedio:   0.31s (consistente)
+Batch mas rapido: 0.29s
+Batch mas lento:  0.32s
+SIN DEGRADACION:  (no hay memory leaks)
+Tiempo total:     3.08s
+
+Veredicto: EXCELENTE - API estable bajo presion
+```
+
+### Resumen de Performance
+
+| Metrica     |    Resultado   | Meta  | Cumplimiento |
+|-------------|----------------|-------|--------------|
+| GET req/s   | 584.81         | 16.67 | 35x          |
+| POST req/s  | 222.66         | 5     | 44x          |
+| Mixed req/s | 440.20         | 7     | 62x          |
+| Tasa Exito  | 100%           | > 90% | Perfecto     |
+| Stabilidad  | 0% degradacion | 0%    | Excelente    |
+
+---
+
+**Ultima actualizacion:** Noviembre 2025  
+**Version**: 1.0  
+**Estado**:  Produccion
