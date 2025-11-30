@@ -1,6 +1,8 @@
 ﻿# Sistema de Gestion de Incidentes
 
-API REST desarrollada con .NET 8 y Arquitectura Hexagonal para la gestion integral de incidentes.
+API REST desarrollada con .NET 8 y Arquitectura Hexagonal para la gestion integral de incidentes. 
+
+> Para conocer las decisiones técnicas, arquitectura y análisis de riesgos, consulta el [Informe Técnico](Documentation/TECHNICAL_REPORT.md).
 
 ---
 
