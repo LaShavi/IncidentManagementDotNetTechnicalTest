@@ -1,5 +1,4 @@
 ﻿using Application.DTOs.Auth;
-using Application.DTOs.Cliente;
 using Application.DTOs.Incident;
 using AutoMapper;
 using Domain.Entities;
@@ -22,13 +21,6 @@ namespace Infrastructure.Mapping
 
             // RefreshToken mappings
             CreateMap<RefreshToken, RefreshTokenEntity>().ReverseMap();
-
-            // Cliente mappings
-            CreateMap<Cliente, ClienteEntity>().ReverseMap();
-            CreateMap<Cliente, ClienteResponseDTO>();
-            CreateMap<CreateClienteDTO, Cliente>()
-                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => Guid.NewGuid()));
-            CreateMap<UpdateClienteDTO, Cliente>();
 
             // PasswordResetToken mappings
             CreateMap<PasswordResetToken, PasswordResetTokenEntity>().ReverseMap();

@@ -4,43 +4,6 @@ namespace Tests.Fixtures;
 
 public static class TestDataFixtures
 {
-    public static Cliente CreateTestCliente(
-        Guid? id = null,
-        string cedula = "12345678",
-        string email = "test@test.com",
-        string telefono = "555-1234",
-        string nombre = "Juan",
-        string apellido = "Perez")
-    {
-        return new Cliente
-        {
-            Id = id ?? Guid.NewGuid(),
-            Cedula = cedula,
-            Email = email,
-            Telefono = telefono,
-            Nombre = nombre,
-            Apellido = apellido
-        };
-    }
-
-    public static List<Cliente> CreateTestClientes(int count = 3)
-    {
-        var clientes = new List<Cliente>();
-        
-        for (int i = 0; i < count; i++)
-        {
-            clientes.Add(CreateTestCliente(
-                cedula: $"1234567{i}",
-                email: $"test{i}@test.com",
-                telefono: $"555-123{i}",
-                nombre: $"Test{i}",
-                apellido: $"User{i}"
-            ));
-        }
-
-        return clientes;
-    }
-
     /// <summary>
     /// Creates a test user with default or custom values
     /// </summary>

@@ -32,4 +32,8 @@
     <ProjectReference Include="..\Api\Api.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Domain\Entities\" />
+  </ItemGroup>
+
 </Project>

@@ -33,7 +33,6 @@ namespace Api.Middleware
             // ============================================
             // REPOSITORIOS - GENERAL
             // ============================================
-            services.AddScoped<IClienteRepository, ClienteRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
             services.AddScoped<IPasswordResetTokenRepository, PasswordResetTokenRepository>();
@@ -49,7 +48,6 @@ namespace Api.Middleware
             // ============================================
             // SERVICIOS DE APLICACIÓN - GENERAL
             // ============================================
-            services.AddScoped<IClienteService, ClienteService>();
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IPasswordPolicyService, PasswordPolicyService>();
 
