@@ -280,5 +280,62 @@ namespace Api.Controllers
                 return await Task.FromResult(priorities);
             }, "Prioridades obtenidas exitosamente");
         }
+
+        /// <summary>
+        /// Obtener incidentes con filtros y paginación
+        /// </summary>
+        [HttpGet("search")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public async Task<ActionResult<ApiResponse<IEnumerable<IncidentResponseDTO>>>> Search([FromQuery] IncidentFilterRequestDTO filter)
+        {
+            if (!ModelState.IsValid)
+            {
+                var validationResponse = new ApiResponse<IEnumerable<IncidentResponseDTO>>
+                {
+                    StatusCode = 400,
+                    Success = false,
+                    Message = "Validation failed",
+                    ValidationErrors = ModelState
+                        .Where(x => x.Value.Errors.Count > 0)
+                        .ToDictionary(
+                            x => x.Key,
+                            x => x.Value.Errors.Select(e => e.ErrorMessage).ToArray()
+                        )
+                };
+                return BadRequest(validationResponse);
+            }
+
+            try
+            {
+                var (incidents, totalCount) = await _incidentService.GetFilteredAsync(filter);
+
+                var meta = new PaginationMetaDTO
+                {
+                    PageNumber = filter.PageNumber,
+                    PageSize = filter.PageSize,
+                    TotalRecords = totalCount,
+                    TotalPages = (int)Math.Ceiling((double)totalCount / filter.PageSize)
+                };
+
+                var response = new ApiResponse<IEnumerable<IncidentResponseDTO>>
+                {
+                    StatusCode = 200,
+                    Success = true,
+                    Message = "Incidentes filtrados obtenidos exitosamente",
+                    Data = incidents,
+                    Meta = meta
+                };
+
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error searching incidents with filter - Title: {Title}, Status: {StatusId}, Priority: {Priority}",
+                    filter.Title, filter.StatusId, filter.Priority);
+                throw; // El middleware global maneja esto
+            }
+        }
     }
 }

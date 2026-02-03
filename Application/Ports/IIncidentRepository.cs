@@ -1,4 +1,5 @@
 using Domain.Entities;
+using Application.DTOs.Incident;
 
 namespace Application.Ports
 {
@@ -15,5 +16,10 @@ namespace Application.Ports
         Task DeleteAsync(Guid id);
         Task AddUpdateAsync(IncidentUpdate update);
         Task<IEnumerable<IncidentUpdate>> GetUpdatesByIncidentIdAsync(Guid incidentId);
+        
+        /// <summary>
+        /// Obtener incidentes con filtros y paginación
+        /// </summary>
+        Task<(IEnumerable<Incident> incidents, int totalCount)> GetFilteredAsync(IncidentFilterRequestDTO filter);
     }
 }

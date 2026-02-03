@@ -1,3 +1,4 @@
+using Application.DTOs.Incident;
 using Application.Ports;
 using AutoMapper;
 using Domain.Entities;
@@ -306,6 +307,86 @@ namespace Infrastructure.Persistence.Repositories
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error retrieving incident updates: {IncidentId}", incidentId);
+                throw;
+            }
+        }
+
+        public async Task<(IEnumerable<Incident> incidents, int totalCount)> GetFilteredAsync(IncidentFilterRequestDTO filter)
+        {
+            _logger.LogInformation("Filtering incidents with criteria - Title: {Title}, Status: {StatusId}, Priority: {Priority}, Page: {Page}/{PageSize}",
+                filter.Title, filter.StatusId, filter.Priority, filter.PageNumber, filter.PageSize);
+
+            try
+            {
+                var query = _context.Incidents
+                    .Include(i => i.User)
+                    .Include(i => i.Category)
+                    .Include(i => i.Status)
+                    .Include(i => i.Updates)
+                        .ThenInclude(u => u.Author)
+                    .AsQueryable();
+
+                // Filtrar por título (búsqueda parcial, case-insensitive)
+                if (!string.IsNullOrWhiteSpace(filter.Title))
+                {
+                    query = query.Where(i => i.Title.ToLower().Contains(filter.Title.ToLower()));
+                }
+
+                // Filtrar por estado
+                if (filter.StatusId.HasValue)
+                {
+                    query = query.Where(i => i.StatusId == filter.StatusId.Value);
+                }
+
+                // Filtrar por prioridad
+                if (filter.Priority.HasValue)
+                {
+                    query = query.Where(i => i.Priority == filter.Priority.Value);
+                }
+
+                // Filtrar por categoría
+                if (filter.CategoryId.HasValue && filter.CategoryId != Guid.Empty)
+                {
+                    query = query.Where(i => i.CategoryId == filter.CategoryId.Value);
+                }
+
+                // Contar total antes de paginar
+                var totalCount = await query.CountAsync();
+
+                // Aplicar ordenamiento
+                query = filter.SortBy?.ToLower() switch
+                {
+                    "priority" => filter.SortOrder?.ToLower() == "asc" 
+                        ? query.OrderBy(i => i.Priority) 
+                        : query.OrderByDescending(i => i.Priority),
+                    
+                    "title" => filter.SortOrder?.ToLower() == "asc" 
+                        ? query.OrderBy(i => i.Title) 
+                        : query.OrderByDescending(i => i.Title),
+                    
+                    "createdat" or _ => filter.SortOrder?.ToLower() == "asc" 
+                        ? query.OrderBy(i => i.CreatedAt) 
+                        : query.OrderByDescending(i => i.CreatedAt)
+                };
+
+                // Aplicar paginación
+                var skip = (filter.PageNumber - 1) * filter.PageSize;
+                var incidents = await query
+                    .Skip(skip)
+                    .Take(filter.PageSize)
+                    .ToListAsync();
+
+                var mappedIncidents = _mapper.Map<IEnumerable<Incident>>(incidents);
+                
+                _logger.LogInformation("Filtered {Count}/{Total} incidents retrieved (Page {Page}/{Pages})",
+                    incidents.Count, totalCount, filter.PageNumber, Math.Ceiling((double)totalCount / filter.PageSize));
+
+                return (mappedIncidents, totalCount);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error filtering incidents with criteria - Title: {Title}, Status: {StatusId}, Priority: {Priority}",
+                    filter.Title, filter.StatusId, filter.Priority);
                 throw;
             }
         }

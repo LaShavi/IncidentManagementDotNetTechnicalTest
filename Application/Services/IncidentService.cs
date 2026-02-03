@@ -264,5 +264,19 @@ namespace Application.Services
             _logger.LogInformation("Incident {IncidentId} reassigned from {OldUserId} to {NewUserId}",
                 incidentId, oldUserId, newUserId);
         }
+
+        public async Task<(IEnumerable<IncidentResponseDTO> incidents, int totalCount)> GetFilteredAsync(IncidentFilterRequestDTO filter)
+        {
+            _logger.LogInformation("Retrieving filtered incidents - Title: {Title}, Status: {StatusId}, Priority: {Priority}, Page: {Page}",
+                filter.Title, filter.StatusId, filter.Priority, filter.PageNumber);
+
+            var (incidents, totalCount) = await _incidentRepository.GetFilteredAsync(filter);
+            var dtos = _mapper.Map<IEnumerable<IncidentResponseDTO>>(incidents);
+
+            _logger.LogInformation("Retrieved {Count}/{Total} incidents successfully (Page {Page})",
+                incidents.Count(), totalCount, filter.PageNumber);
+
+            return (dtos, totalCount);
+        }
     }
 }

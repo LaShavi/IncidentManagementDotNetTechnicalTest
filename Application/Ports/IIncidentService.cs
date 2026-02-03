@@ -15,5 +15,10 @@ namespace Application.Ports
         Task AddCommentAsync(Guid incidentId, string comment, Guid authorId);
         Task<IEnumerable<IncidentUpdateDTO>> GetUpdatesAsync(Guid incidentId);
         Task AssignToUserAsync(Guid incidentId, Guid newUserId, Guid currentUserId);
+        
+        /// <summary>
+        /// Obtener incidentes filtrados con paginación
+        /// </summary>
+        Task<(IEnumerable<IncidentResponseDTO> incidents, int totalCount)> GetFilteredAsync(IncidentFilterRequestDTO filter);
     }
 }

@@ -94,4 +94,33 @@ namespace Application.Validation
                 .WithMessage("El ID del usuario debe ser valido");
         }
     }
+
+    public class IncidentFilterValidator : AbstractValidator<IncidentFilterRequestDTO>
+    {
+        public IncidentFilterValidator()
+        {
+            RuleFor(x => x.PageNumber)
+                .GreaterThanOrEqualTo(1)
+                .WithMessage("PageNumber debe ser mayor a 0");
+
+            RuleFor(x => x.PageSize)
+                .GreaterThanOrEqualTo(1)
+                .LessThanOrEqualTo(100)
+                .WithMessage("PageSize debe estar entre 1 y 100");
+
+            RuleFor(x => x.Priority)
+                .GreaterThanOrEqualTo(1)
+                .LessThanOrEqualTo(5)
+                .When(x => x.Priority.HasValue)
+                .WithMessage("Priority debe estar entre 1 y 5");
+
+            RuleFor(x => x.SortBy)
+                .Must(x => x == null || new[] { "createdat", "priority", "title" }.Contains(x.ToLower()))
+                .WithMessage("SortBy debe ser: createdAt, priority o title");
+
+            RuleFor(x => x.SortOrder)
+                .Must(x => x == null || new[] { "asc", "desc" }.Contains(x.ToLower()))
+                .WithMessage("SortOrder debe ser: asc o desc");
+        }
+    }
 }
